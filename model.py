@@ -40,7 +40,6 @@ class Model(nn.Module):
         positional_emb = self.pos_embedding(pos)
         x = self.drop(token_emb + positional_emb)
 
-        # Rastgele bir 'memory' tensoru oluşturun
         memory = torch.rand(B, T, self.args.n_embd, device=device)
 
         x = self.transformer_decoder(tgt=x, memory=memory)
@@ -61,7 +60,6 @@ class Model(nn.Module):
     def generate(self, idx, max_new_tokens, do_sample: bool = False, temprature: float = 1.0, top_k: Optional[int] = None):
 
         for _ in range(max_new_tokens):
-            # sequence cropping
             idx_crop = idx if idx.size(1) <= self.args.block_size else idx[:, -self.args.block_size:]
 
             logits, _ = self(idx_crop)

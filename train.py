@@ -14,8 +14,8 @@ from utils import get_tokenizer
 
 
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
-batch_size = 8
-block_size = 16
+batch_size = 16
+block_size = 32
 max_iters = 5000
 eval_interval = 100
 learning_rate = 1e-3
@@ -47,15 +47,13 @@ data = preprocess_dialogues(data_path, tokenizer)
 data = torch.tensor(data, dtype=torch.long, device=device)
 print(data.shape, data.dtype)
 
-n = int(0.9*len(data)) # first 90% will be train, rest val
+n = int(0.9*len(data))
 train_data = data[:n]
 val_data = data[n:]
 
-batch_size = 4 # how many independent sequences will we process in parallel?
-block_size = 8 # what is the maximum context length for predictions?
+
 
 def get_batch(split):
-    # generate a small batch of data of inputs x and targets y
     data = train_data if split == 'train' else val_data
     ix = torch.randint(len(data) - block_size, (batch_size,))
     x = torch.stack([data[i:i+block_size] for i in ix])
