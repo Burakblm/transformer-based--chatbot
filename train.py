@@ -16,13 +16,15 @@ from utils import get_tokenizer
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 batch_size = 8
 block_size = 16
-max_iters = 1000
+max_iters = 5000
 eval_interval = 100
 learning_rate = 1e-3
 eval_iters = 50
 dropout = 0.2
-model_path = os.getcwd() + "/model/snapshot.pt"
-print(model_path)
+model_path = os.path.join(os.getcwd(), "model", "snapshot.pt")
+model_dir = os.path.join(os.getcwd(), "model")
+if not os.path.exists(model_dir):
+    os.makedirs(model_dir)
 
 
 @dataclass
