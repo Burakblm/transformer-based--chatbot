@@ -1,0 +1,452 @@
+[
+    {
+        "dialog_id": 0,
+        "dialog": [
+            {
+                "id": 0,
+                "sender": "user",
+                "text": "merhaba"
+            },
+            {
+                "id": 1,
+                "sender": "bot",
+                "text": "merhabalar size nasıl yardımcı olabilirim?"
+            },
+            {
+                "id": 2,
+                "sender": "user",
+                "text": "Fırat üniversitesi kaç yılında kurulmuştur?"
+            },
+            {
+                "id": 3,
+                "sender": "bot",
+                "text": "Fırat üniversitesi 1975 yılında kurulmuştur?"
+            }
+        ]
+    },
+    {
+        "dialog_id": 1,
+        "dialog": [
+            {
+                "id": 0,
+                "sender": "user",
+                "text": "merhaba"
+            },
+            {
+                "id": 1,
+                "sender": "bot",
+                "text": "merhabalar bugün size nasıl yardımcı olabilirm?"
+            },
+            {
+                "id": 2,
+                "sender": "user",
+                "text": "Fırat üniversitesinde kaç adet bölüm vardır?"
+            },
+            {
+                "id": 3,
+                "sender": "bot",
+                "text": "Fırat üniversitesi 2024 yılı itibari ile 23 bölüm vardır"
+            }
+        ]
+    },
+    {
+        "dialog_id": 0,
+        "dialog": [
+            {
+                "id": 0,
+                "sender": "user",
+                "text": "merhaba"
+            },
+            {
+                "id": 1,
+                "sender": "bot",
+                "text": "merhabalar size nasıl yardımcı olabilirim?"
+            },
+            {
+                "id": 2,
+                "sender": "user",
+                "text": "Fırat üniversitesi kaç yılında kurulmuştur?"
+            },
+            {
+                "id": 3,
+                "sender": "bot",
+                "text": "Fırat üniversitesi 1975 yılında kurulmuştur?"
+            }
+        ]
+    },
+    {
+        "dialog_id": 1,
+        "dialog": [
+            {
+                "id": 0,
+                "sender": "user",
+                "text": "merhaba"
+            },
+            {
+                "id": 1,
+                "sender": "bot",
+                "text": "merhabalar bugün size nasıl yardımcı olabilirm?"
+            },
+            {
+                "id": 2,
+                "sender": "user",
+                "text": "Fırat üniversitesinde kaç adet bölüm vardır?"
+            },
+            {
+                "id": 3,
+                "sender": "bot",
+                "text": "Fırat üniversitesi 2024 yılı itibari ile 23 bölüm vardır"
+            }
+        ]
+    },
+    {
+        "dialog_id": 0,
+        "dialog": [
+            {
+                "id": 0,
+                "sender": "user",
+                "text": "merhaba"
+            },
+            {
+                "id": 1,
+                "sender": "bot",
+                "text": "merhabalar size nasıl yardımcı olabilirim?"
+            },
+            {
+                "id": 2,
+                "sender": "user",
+                "text": "Fırat üniversitesi kaç yılında kurulmuştur?"
+            },
+            {
+                "id": 3,
+                "sender": "bot",
+                "text": "Fırat üniversitesi 1975 yılında kurulmuştur?"
+            }
+        ]
+    },
+    {
+        "dialog_id": 1,
+        "dialog": [
+            {
+                "id": 0,
+                "sender": "user",
+                "text": "merhaba"
+            },
+            {
+                "id": 1,
+                "sender": "bot",
+                "text": "merhabalar bugün size nasıl yardımcı olabilirm?"
+            },
+            {
+                "id": 2,
+                "sender": "user",
+                "text": "Fırat üniversitesinde kaç adet bölüm vardır?"
+            },
+            {
+                "id": 3,
+                "sender": "bot",
+                "text": "Fırat üniversitesi 2024 yılı itibari ile 23 bölüm vardır"
+            }
+        ]
+    },
+    {
+        "dialog_id": 0,
+        "dialog": [
+            {
+                "id": 0,
+                "sender": "user",
+                "text": "merhaba"
+            },
+            {
+                "id": 1,
+                "sender": "bot",
+                "text": "merhabalar size nasıl yardımcı olabilirim?"
+            },
+            {
+                "id": 2,
+                "sender": "user",
+                "text": "Fırat üniversitesi kaç yılında kurulmuştur?"
+            },
+            {
+                "id": 3,
+                "sender": "bot",
+                "text": "Fırat üniversitesi 1975 yılında kurulmuştur?"
+            }
+        ]
+    },
+    {
+        "dialog_id": 1,
+        "dialog": [
+            {
+                "id": 0,
+                "sender": "user",
+                "text": "merhaba"
+            },
+            {
+                "id": 1,
+                "sender": "bot",
+                "text": "merhabalar bugün size nasıl yardımcı olabilirm?"
+            },
+            {
+                "id": 2,
+                "sender": "user",
+                "text": "Fırat üniversitesinde kaç adet bölüm vardır?"
+            },
+            {
+                "id": 3,
+                "sender": "bot",
+                "text": "Fırat üniversitesi 2024 yılı itibari ile 23 bölüm vardır"
+            }
+        ]
+    },
+    {
+        "dialog_id": 0,
+        "dialog": [
+            {
+                "id": 0,
+                "sender": "user",
+                "text": "merhaba"
+            },
+            {
+                "id": 1,
+                "sender": "bot",
+                "text": "merhabalar size nasıl yardımcı olabilirim?"
+            },
+            {
+                "id": 2,
+                "sender": "user",
+                "text": "Fırat üniversitesi kaç yılında kurulmuştur?"
+            },
+            {
+                "id": 3,
+                "sender": "bot",
+                "text": "Fırat üniversitesi 1975 yılında kurulmuştur?"
+            }
+        ]
+    },
+    {
+        "dialog_id": 1,
+        "dialog": [
+            {
+                "id": 0,
+                "sender": "user",
+                "text": "merhaba"
+            },
+            {
+                "id": 1,
+                "sender": "bot",
+                "text": "merhabalar bugün size nasıl yardımcı olabilirm?"
+            },
+            {
+                "id": 2,
+                "sender": "user",
+                "text": "Fırat üniversitesinde kaç adet bölüm vardır?"
+            },
+            {
+                "id": 3,
+                "sender": "bot",
+                "text": "Fırat üniversitesi 2024 yılı itibari ile 23 bölüm vardır"
+            }
+        ]
+    },
+    {
+        "dialog_id": 0,
+        "dialog": [
+            {
+                "id": 0,
+                "sender": "user",
+                "text": "merhaba"
+            },
+            {
+                "id": 1,
+                "sender": "bot",
+                "text": "merhabalar size nasıl yardımcı olabilirim?"
+            },
+            {
+                "id": 2,
+                "sender": "user",
+                "text": "Fırat üniversitesi kaç yılında kurulmuştur?"
+            },
+            {
+                "id": 3,
+                "sender": "bot",
+                "text": "Fırat üniversitesi 1975 yılında kurulmuştur?"
+            }
+        ]
+    },
+    {
+        "dialog_id": 1,
+        "dialog": [
+            {
+                "id": 0,
+                "sender": "user",
+                "text": "merhaba"
+            },
+            {
+                "id": 1,
+                "sender": "bot",
+                "text": "merhabalar bugün size nasıl yardımcı olabilirm?"
+            },
+            {
+                "id": 2,
+                "sender": "user",
+                "text": "Fırat üniversitesinde kaç adet bölüm vardır?"
+            },
+            {
+                "id": 3,
+                "sender": "bot",
+                "text": "Fırat üniversitesi 2024 yılı itibari ile 23 bölüm vardır"
+            }
+        ]
+    },
+    {
+        "dialog_id": 0,
+        "dialog": [
+            {
+                "id": 0,
+                "sender": "user",
+                "text": "merhaba"
+            },
+            {
+                "id": 1,
+                "sender": "bot",
+                "text": "merhabalar size nasıl yardımcı olabilirim?"
+            },
+            {
+                "id": 2,
+                "sender": "user",
+                "text": "Fırat üniversitesi kaç yılında kurulmuştur?"
+            },
+            {
+                "id": 3,
+                "sender": "bot",
+                "text": "Fırat üniversitesi 1975 yılında kurulmuştur?"
+            }
+        ]
+    },
+    {
+        "dialog_id": 1,
+        "dialog": [
+            {
+                "id": 0,
+                "sender": "user",
+                "text": "merhaba"
+            },
+            {
+                "id": 1,
+                "sender": "bot",
+                "text": "merhabalar bugün size nasıl yardımcı olabilirm?"
+            },
+            {
+                "id": 2,
+                "sender": "user",
+                "text": "Fırat üniversitesinde kaç adet bölüm vardır?"
+            },
+            {
+                "id": 3,
+                "sender": "bot",
+                "text": "Fırat üniversitesi 2024 yılı itibari ile 23 bölüm vardır"
+            }
+        ]
+    },
+    {
+        "dialog_id": 0,
+        "dialog": [
+            {
+                "id": 0,
+                "sender": "user",
+                "text": "merhaba"
+            },
+            {
+                "id": 1,
+                "sender": "bot",
+                "text": "merhabalar size nasıl yardımcı olabilirim?"
+            },
+            {
+                "id": 2,
+                "sender": "user",
+                "text": "Fırat üniversitesi kaç yılında kurulmuştur?"
+            },
+            {
+                "id": 3,
+                "sender": "bot",
+                "text": "Fırat üniversitesi 1975 yılında kurulmuştur?"
+            }
+        ]
+    },
+    {
+        "dialog_id": 1,
+        "dialog": [
+            {
+                "id": 0,
+                "sender": "user",
+                "text": "merhaba"
+            },
+            {
+                "id": 1,
+                "sender": "bot",
+                "text": "merhabalar bugün size nasıl yardımcı olabilirm?"
+            },
+            {
+                "id": 2,
+                "sender": "user",
+                "text": "Fırat üniversitesinde kaç adet bölüm vardır?"
+            },
+            {
+                "id": 3,
+                "sender": "bot",
+                "text": "Fırat üniversitesi 2024 yılı itibari ile 23 bölüm vardır"
+            }
+        ]
+    },
+    {
+        "dialog_id": 0,
+        "dialog": [
+            {
+                "id": 0,
+                "sender": "user",
+                "text": "merhaba"
+            },
+            {
+                "id": 1,
+                "sender": "bot",
+                "text": "merhabalar size nasıl yardımcı olabilirim?"
+            },
+            {
+                "id": 2,
+                "sender": "user",
+                "text": "Fırat üniversitesi kaç yılında kurulmuştur?"
+            },
+            {
+                "id": 3,
+                "sender": "bot",
+                "text": "Fırat üniversitesi 1975 yılında kurulmuştur?"
+            }
+        ]
+    },
+    {
+        "dialog_id": 1,
+        "dialog": [
+            {
+                "id": 0,
+                "sender": "user",
+                "text": "merhaba"
+            },
+            {
+                "id": 1,
+                "sender": "bot",
+                "text": "merhabalar bugün size nasıl yardımcı olabilirm?"
+            },
+            {
+                "id": 2,
+                "sender": "user",
+                "text": "Fırat üniversitesinde kaç adet bölüm vardır?"
+            },
+            {
+                "id": 3,
+                "sender": "bot",
+                "text": "Fırat üniversitesi 2024 yılı itibari ile 23 bölüm vardır"
+            }
+        ]
+    }
+]
