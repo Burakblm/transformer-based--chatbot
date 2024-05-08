@@ -31,8 +31,8 @@ if not os.path.exists(model_dir):
 class ModelArgs:
     block_size: int = 1024
     vocab_size: int = 32002
-    n_layer: int = 2
-    n_head: int = 2
+    n_layer: int = 1
+    n_head: int = 1
     n_embd: int = 768
     dropout: float = 0.0
     bias: bool = False
