@@ -31,9 +31,9 @@ if not os.path.exists(model_dir):
 class ModelArgs:
     block_size: int = 1024
     vocab_size: int = 32002
-    n_layer: int = 1
-    n_head: int = 1
-    n_embd: int = 512
+    n_layer: int = 2
+    n_head: int = 2
+    n_embd: int = 768
     dropout: float = 0.0
     bias: bool = False
     norm_eps: float = 1e-4
@@ -100,7 +100,7 @@ for iter in range(max_iters):
 
 text = "<user>merhabalar<bot>"
 context = torch.tensor([tokenizer.encode(text)], dtype=torch.long, device=device)
-print(tokenizer.decode(model.generate(context, max_new_tokens=200)[0].tolist()))
+print(tokenizer.decode(model.generate(context, max_new_tokens=100)[0].tolist()))
 
 
 torch.save(model.state_dict(), model_path)
