@@ -14,9 +14,9 @@ from utils import get_tokenizer
 
 
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
-batch_size = 16
-block_size = 32
-max_iters = 5000
+batch_size = 8
+block_size = 16
+max_iters = 30000
 eval_interval = 100
 learning_rate = 1e-3
 eval_iters = 50
