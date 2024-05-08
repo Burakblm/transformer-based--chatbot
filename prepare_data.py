@@ -17,9 +17,9 @@ def preprocess_dialogues(data_path: str, tokenizer) -> List[int]:
         dialogue_text = ""
         for data in dialogue["dialog"]:
             if data["sender"] == "user":
-                formatted_sentence = f"<user>{data["text"]}"
+                formatted_sentence = f"<user>{data['text']}"
             elif data["sender"] == "bot":
-                formatted_sentence = f"<bot>{data["text"]}"
+                formatted_sentence = f"<bot>{data['text']}"
             else:
                 raise ValueError(f"Geçersiz gönderici: {data["sender"]}")
             
