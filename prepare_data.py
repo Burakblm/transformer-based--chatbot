@@ -21,7 +21,7 @@ def preprocess_dialogues(data_path: str, tokenizer) -> List[int]:
             elif data["sender"] == "bot":
                 formatted_sentence = f"<bot>{data['text']}"
             else:
-                raise ValueError(f"Geçersiz gönderici: {data["sender"]}")
+                raise ValueError(f"Geçersiz gönderici: {data['sender']}")
             
             dialogue_text = dialogue_text + formatted_sentence
         dialogue_text = dialogue_text + tokenizer.eos_token
