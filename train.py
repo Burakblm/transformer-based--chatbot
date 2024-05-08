@@ -42,7 +42,7 @@ tokenizer = get_tokenizer()
 data_path = os.getcwd() + "/data.json"
 
 data = preprocess_dialogues(data_path, tokenizer)
-data = torch.tensor(data, dtype=torch.long)
+data = torch.tensor(data, dtype=torch.long, device=device)
 print(data.shape, data.dtype)
 
 n = int(0.9*len(data)) # first 90% will be train, rest val
@@ -94,7 +94,6 @@ for iter in range(max_iters):
     optimizer.zero_grad(set_to_none=True)
     loss.backward()
     optimizer.step()
-
 
 
 context = torch.zeros((1, 1), dtype=torch.long, device=device)
