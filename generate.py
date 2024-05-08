@@ -5,18 +5,16 @@ import os
 from utils import get_tokenizer
 from model import Model, ModelArgs
 
-model_path = os.getcwd() + "/model/snapshot.pt"
+device = 'cuda' if torch.cuda.is_available() else 'cpu'
+model_path = os.path.join(os.getcwd(), "model", "snapshot.pt")
 
 model_args = ModelArgs()
 model = Model(model_args)
 
 model.load_state_dict(torch.load(model_path))
-model.eval()
+model.to(device)
 
 tokenizer = get_tokenizer()
-model_path = os.getcwd() + "/model/snapshot.pt"
-device = 'cuda' if torch.cuda.is_available() else 'cpu'
-
 
 def generate_text(model, text: str, stop_token=[32000], max_token: int = 100, temprature: float = 1.0):
     model.eval()
