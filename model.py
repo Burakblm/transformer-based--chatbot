@@ -13,7 +13,7 @@ class ModelArgs:
     vocab_size: int = 32002
     n_layer: int = 1
     n_head: int = 1
-    n_embd: int = 768
+    n_embd: int = 256
     dropout: float = 0.0
     bias: bool = False
     norm_eps: float = 1e-4
