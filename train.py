@@ -9,16 +9,16 @@ from torch.nn import functional as F
 from typing import Optional
 
 from model import Model
-from prepare_data import preprocess_dialogues
+from prepare_data import preprocess_dialogues, prepare_text_data
 from utils import get_tokenizer
 
 
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
-batch_size = 8
-block_size = 16
+batch_size = 16
+block_size = 32
 max_iters = 30000
 eval_interval = 100
-learning_rate = 1e-4
+learning_rate = 4e-4
 eval_iters = 50
 dropout = 0.2
 model_path = os.path.join(os.getcwd(), "model", "snapshot.pt")
@@ -31,8 +31,8 @@ if not os.path.exists(model_dir):
 class ModelArgs:
     block_size: int = 1024
     vocab_size: int = 32002
-    n_layer: int = 1
-    n_head: int = 1
+    n_layer: int = 4
+    n_head: int = 4
     n_embd: int = 768
     dropout: float = 0.0
     bias: bool = False
@@ -41,8 +41,10 @@ class ModelArgs:
 torch.manual_seed(42)
 
 tokenizer = get_tokenizer()
-data_path = os.getcwd() + "/data.json"
+data_path = os.getcwd() + "/data/data.json"
+text_data_path = os.getcwd() + "/data/output.txt"
 
+"""
 data = preprocess_dialogues(data_path, tokenizer)
 data = torch.tensor(data, dtype=torch.long, device=device)
 print(data.shape, data.dtype)
@@ -50,7 +52,10 @@ print(data.shape, data.dtype)
 n = int(0.9*len(data))
 train_data = data[:n]
 val_data = data[n:]
+"""
 
+
+train_data, val_data = prepare_text_data(text_data_path)
 
 
 def get_batch(split):
@@ -96,10 +101,17 @@ for iter in range(max_iters):
     optimizer.step()
 
 
-text = "<user>merhabalar<bot>"
+text = "Fırat Üniversitesi"
 context = torch.tensor([tokenizer.encode(text)], dtype=torch.long, device=device)
-print(tokenizer.decode(model.generate(context, max_new_tokens=100)[0].tolist()))
+print(tokenizer.decode(model.generate(context, max_new_tokens=1000)[0].tolist()))
 
+text = "Tıp Fakültesi"
+context = torch.tensor([tokenizer.encode(text)], dtype=torch.long, device=device)
+print(tokenizer.decode(model.generate(context, max_new_tokens=1000)[0].tolist()))
+
+text = "Bilgisayar Mühendisliği"
+context = torch.tensor([tokenizer.encode(text)], dtype=torch.long, device=device)
+print(tokenizer.decode(model.generate(context, max_new_tokens=1000)[0].tolist()))
 
 torch.save(model.state_dict(), model_path)
 

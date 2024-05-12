@@ -1,6 +1,7 @@
 from utils import get_tokenizer
 import json
 from typing import List
+import torch
 
 
 tokenizer = get_tokenizer()
@@ -28,3 +29,18 @@ def preprocess_dialogues(data_path: str, tokenizer) -> List[int]:
         dialogue_array.extend(tokenizer.encode(dialogue_text))
 
     return dialogue_array
+
+
+def prepare_text_data(path: str = "output.txt", split_rate: float = 0.9):
+    with open(path, "r") as f:
+        data = f.read()
+    
+    data = tokenizer.encode(data)
+    data = torch.tensor(data, dtype=torch.long)
+    data_size = len(data)
+    train_data = data[:int(data_size * split_rate)]
+    print(f"Train data size: {len(train_data)}")
+    val_data = data[int(data_size * split_rate):]
+    print(f"Validation data size: {len(val_data)}")
+
+    return train_data, val_data
