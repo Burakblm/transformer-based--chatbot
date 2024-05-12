@@ -3,6 +3,8 @@ import json
 from typing import List
 import torch
 
+device = 'cuda' if torch.cuda.is_available() else 'cpu'
+
 
 tokenizer = get_tokenizer()
 print(tokenizer.vocab_size)
@@ -36,7 +38,7 @@ def prepare_text_data(path: str = "output.txt", split_rate: float = 0.9):
         data = f.read()
     
     data = tokenizer.encode(data)
-    data = torch.tensor(data, dtype=torch.long)
+    data = torch.tensor(data, dtype=torch.long, device=device)
     data_size = len(data)
     train_data = data[:int(data_size * split_rate)]
     print(f"Train data size: {len(train_data)}")
