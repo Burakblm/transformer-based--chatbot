@@ -11,7 +11,7 @@ from torch.cuda.amp import autocast
 
 from typing import Optional
 
-from model import Model
+from model import Transformer
 from prepare_data import preprocess_dialogues, prepare_text_data
 from utils import get_tokenizer
 
@@ -21,7 +21,7 @@ device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
 scaler = GradScaler()
 
-batch_size = 8
+batch_size = 16
 block_size = 32
 max_iters = 10000
 eval_interval = 100
@@ -40,7 +40,7 @@ class ModelArgs:
     vocab_size: int = 32002
     n_layer: int = 1
     n_head: int = 1
-    n_embd: int = 256
+    n_embd: int = 768
     dropout: float = 0.0
     bias: bool = False
     norm_eps: float = 1e-4
@@ -63,7 +63,6 @@ val_data = data[n:]
 
 
 train_data, val_data = prepare_text_data(text_data_path)
-train_data[:10000]
 
 def get_batch(split):
     data = train_data if split == 'train' else val_data
@@ -75,12 +74,12 @@ def get_batch(split):
 
 if os.path.exists(model_path):
     model_args = ModelArgs()
-    model = Model(model_args)
+    model = Transformer(model_args)
     model.load_state_dict(torch.load(model_path))
     model.to(device)
 else:
     model_args = ModelArgs()
-    model = Model(model_args)
+    model = Transformer(model_args)
     model = model.to(device)
 
 optimizer = torch.optim.AdamW(model.parameters(), lr=learning_rate)
