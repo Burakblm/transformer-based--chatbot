@@ -21,7 +21,7 @@ device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
 scaler = GradScaler()
 
-batch_size = 4
+batch_size = 8
 block_size = 1024
 max_iters = 1000
 eval_interval = 50
