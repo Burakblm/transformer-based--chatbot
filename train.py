@@ -63,7 +63,7 @@ val_data = data[n:]
 
 
 train_data, val_data = prepare_text_data(text_data_path)
-
+train_data[:10000]
 
 def get_batch(split):
     data = train_data if split == 'train' else val_data
