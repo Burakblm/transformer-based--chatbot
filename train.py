@@ -21,10 +21,10 @@ device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
 scaler = GradScaler()
 
-batch_size = 16
-block_size = 32
-max_iters = 10000
-eval_interval = 100
+batch_size = 4
+block_size = 1024
+max_iters = 1000
+eval_interval = 50
 learning_rate = 4e-4
 eval_iters = 50
 dropout = 0.2
@@ -118,15 +118,15 @@ for iter in range(max_iters):
 
 text = "Fırat Üniversitesi"
 context = torch.tensor([tokenizer.encode(text)], dtype=torch.long, device=device)
-print(tokenizer.decode(model.generate(context, max_new_tokens=300)[0].tolist()))
+print(tokenizer.decode(model.generate(context, max_new_tokens=400)[0].tolist()))
 
 text = "Tıp Fakültesi"
 context = torch.tensor([tokenizer.encode(text)], dtype=torch.long, device=device)
-print(tokenizer.decode(model.generate(context, max_new_tokens=300)[0].tolist()))
+print(tokenizer.decode(model.generate(context, max_new_tokens=400)[0].tolist()))
 
 text = "Bilgisayar Mühendisliği"
 context = torch.tensor([tokenizer.encode(text)], dtype=torch.long, device=device)
-print(tokenizer.decode(model.generate(context, max_new_tokens=300)[0].tolist()))
+print(tokenizer.decode(model.generate(context, max_new_tokens=400)[0].tolist()))
 
 torch.save(model.state_dict(), model_path)
 
