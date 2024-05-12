@@ -1,10 +1,13 @@
 from dataclasses import dataclass
 import os
+import sys
 
 import torch
 import torch.nn as nn
 import torch.optim as optim
 from torch.nn import functional as F
+from torch.cuda.amp import GradScaler
+from torch.cuda.amp import autocast
 
 from typing import Optional
 
@@ -13,10 +16,14 @@ from prepare_data import preprocess_dialogues, prepare_text_data
 from utils import get_tokenizer
 
 
+
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
-batch_size = 16
-block_size = 32
-max_iters = 20000
+
+scaler = GradScaler()
+
+batch_size = 8
+block_size = 16
+max_iters = 40000
 eval_interval = 100
 learning_rate = 4e-4
 eval_iters = 50
@@ -65,12 +72,19 @@ def get_batch(split):
     y = torch.stack([data[i+1:i+block_size+1] for i in ix])
     return x, y
 
-model_args = ModelArgs()
-model = Model(model_args)
-model = model.to(device)
+
+if os.path.exists(model_path):
+    model_args = ModelArgs()
+    model = Model(model_args)
+    model.load_state_dict(torch.load(model_path))
+    model.to(device)
+else:
+    model_args = ModelArgs()
+    model = Model(model_args)
+    model = model.to(device)
+
 optimizer = torch.optim.AdamW(model.parameters(), lr=learning_rate)
 print(sum(p.numel() for p in model.parameters())/1e6, 'M parameters')
-
 
 @torch.no_grad()
 def estimate_loss():
@@ -94,24 +108,27 @@ for iter in range(max_iters):
         print(f"step {iter}: train loss {losses['train']:.4f}, val loss {losses['val']:.4f}")
 
     xb, yb = get_batch('train')
-
-    logits, loss = model(xb, yb)
     optimizer.zero_grad(set_to_none=True)
-    loss.backward()
-    optimizer.step()
+    with autocast(dtype=torch.float16):
+        logits, loss = model(xb, yb)
+    scaler.scale(loss).backward()
+    scaler.step(optimizer)
+    scaler.update()
+
 
 
 text = "Fırat Üniversitesi"
 context = torch.tensor([tokenizer.encode(text)], dtype=torch.long, device=device)
-print(tokenizer.decode(model.generate(context, max_new_tokens=1000)[0].tolist()))
+print(tokenizer.decode(model.generate(context, max_new_tokens=300)[0].tolist()))
 
 text = "Tıp Fakültesi"
 context = torch.tensor([tokenizer.encode(text)], dtype=torch.long, device=device)
-print(tokenizer.decode(model.generate(context, max_new_tokens=1000)[0].tolist()))
+print(tokenizer.decode(model.generate(context, max_new_tokens=300)[0].tolist()))
 
 text = "Bilgisayar Mühendisliği"
 context = torch.tensor([tokenizer.encode(text)], dtype=torch.long, device=device)
-print(tokenizer.decode(model.generate(context, max_new_tokens=1000)[0].tolist()))
+print(tokenizer.decode(model.generate(context, max_new_tokens=300)[0].tolist()))
 
 torch.save(model.state_dict(), model_path)
+
 
