@@ -54,7 +54,3 @@ def prepare_text_data(path: str = "output.txt", split_rate: float = 0.9):
     print(f"Validation data size: {len(val_data)}")
 
     return train_data, val_data
-
-data_path = os.path.join(os.getcwd(), "data", "intents.json")
-
-train, val = preprocess_dialogues(data_path)

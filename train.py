@@ -49,7 +49,7 @@ tokenizer = get_tokenizer()
 
 
 text_data_path = os.path.join(os.getcwd(), "data", "output.txt")
-json_data_path = os.path.join(os.getcwd(), "data", "intents.json")
+#json_data_path = os.path.join(os.getcwd(), "data", "intents.json")
 
 
 """
