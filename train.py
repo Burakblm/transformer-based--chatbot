@@ -15,15 +15,13 @@ from model import Transformer
 from prepare_data import preprocess_dialogues, prepare_text_data
 from utils import get_tokenizer
 
-
-
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
 scaler = GradScaler()
 
 batch_size = 8
 block_size = 1024
-max_iters = 1000
+max_iters = 100
 eval_interval = 50
 learning_rate = 4e-4
 eval_iters = 50
@@ -48,8 +46,11 @@ class ModelArgs:
 torch.manual_seed(42)
 
 tokenizer = get_tokenizer()
-data_path = os.getcwd() + "/data/data.json"
-text_data_path = os.getcwd() + "/data/output.txt"
+
+
+text_data_path = os.path.join(os.getcwd(), "data", "output.txt")
+json_data_path = os.path.join(os.getcwd(), "data", "intents.json")
+
 
 """
 data = preprocess_dialogues(data_path, tokenizer)
@@ -63,6 +64,9 @@ val_data = data[n:]
 
 
 train_data, val_data = prepare_text_data(text_data_path)
+#train_data, val_data = preprocess_dialogues(json_data_path)
+
+
 
 def get_batch(split):
     data = train_data if split == 'train' else val_data
