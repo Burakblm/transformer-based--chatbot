@@ -48,8 +48,8 @@ torch.manual_seed(42)
 tokenizer = get_tokenizer()
 
 
-text_data_path = os.path.join(os.getcwd(), "data", "output.txt")
-#json_data_path = os.path.join(os.getcwd(), "data", "intents.json")
+#text_data_path = os.path.join(os.getcwd(), "data", "output.txt")
+json_data_path = os.path.join(os.getcwd(), "data", "intents.json")
 
 
 """
