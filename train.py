@@ -21,7 +21,7 @@ scaler = GradScaler()
 
 batch_size = 8
 block_size = 1024
-max_iters = 100
+max_iters = 1000
 eval_interval = 50
 learning_rate = 4e-4
 eval_iters = 50
@@ -36,8 +36,8 @@ if not os.path.exists(model_dir):
 class ModelArgs:
     block_size: int = 1024
     vocab_size: int = 32002
-    n_layer: int = 1
-    n_head: int = 1
+    n_layer: int = 4
+    n_head: int = 4
     n_embd: int = 768
     dropout: float = 0.0
     bias: bool = False
