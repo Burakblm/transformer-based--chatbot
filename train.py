@@ -48,7 +48,7 @@ torch.manual_seed(42)
 tokenizer = get_tokenizer()
 
 
-#text_data_path = os.path.join(os.getcwd(), "data", "output.txt")
+text_data_path = os.path.join(os.getcwd(), "data", "output.txt")
 json_data_path = os.path.join(os.getcwd(), "data", "intents.json")
 
 
@@ -63,8 +63,8 @@ val_data = data[n:]
 """
 
 
-train_data, val_data = prepare_text_data(text_data_path)
-#train_data, val_data = preprocess_dialogues(json_data_path)
+#train_data, val_data = prepare_text_data(text_data_path)
+train_data, val_data = preprocess_dialogues(json_data_path)
 
 
 
