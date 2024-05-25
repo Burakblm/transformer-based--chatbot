@@ -1,16 +1,13 @@
-from dataclasses import dataclass
 import os
 import sys
-
+import argparse
 import torch
 import torch.nn as nn
 import torch.optim as optim
 from torch.nn import functional as F
-from torch.cuda.amp import GradScaler
-from torch.cuda.amp import autocast
-
+from torch.cuda.amp import GradScaler, autocast
+from dataclasses import dataclass
 from typing import Optional
-
 from model import Transformer
 from prepare_data import preprocess_dialogues, prepare_text_data
 from utils import get_tokenizer
@@ -20,14 +17,28 @@ device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
 scaler = GradScaler()
 
-batch_size = 2
-block_size = 1024
-max_iters = 200
-eval_interval = 50
-learning_rate = 4e-4
-eval_iters = 50
-dropout = 0.2
-train_type = "pretrain"
+def parse_args():
+    parser = argparse.ArgumentParser(description='Train a Transformer model.')
+    parser.add_argument('--batch_size', type=int, default=2, help='Batch size for training')
+    parser.add_argument('--block_size', type=int, default=1024, help='Block size for training')
+    parser.add_argument('--max_iters', type=int, default=200, help='Maximum number of iterations')
+    parser.add_argument('--eval_interval', type=int, default=50, help='Evaluation interval')
+    parser.add_argument('--learning_rate', type=float, default=4e-4, help='Learning rate')
+    parser.add_argument('--eval_iters', type=int, default=50, help='Number of evaluation iterations')
+    parser.add_argument('--dropout', type=float, default=0.2, help='Dropout rate')
+    parser.add_argument('--train_type', type=str, default='finetune', choices=['finetune', 'pretrain'], help='Training type')
+    return parser.parse_args()
+
+args = parse_args()
+
+batch_size = args.batch_size
+block_size = args.block_size
+max_iters = args.max_iters
+eval_interval = args.eval_interval
+learning_rate = args.learning_rate
+eval_iters = args.eval_iters
+dropout = args.dropout
+train_type = args.train_type
 
 model_path = os.path.join(os.getcwd(), "model", "snapshot.pt")
 model_dir = os.path.join(os.getcwd(), "model")
@@ -45,7 +56,6 @@ class ModelArgs:
     bias: bool = False
     norm_eps: float = 1e-4
 
-
 torch.manual_seed(42)
 
 tokenizer = get_tokenizer()
@@ -62,50 +72,47 @@ def get_batch(split):
 
 model_args = ModelArgs()
 model = Transformer(model_args)
-print("model loading...")
+print("Model loading...")
 model.load_state_dict(torch.load(model_path,  map_location=device))
 model.to(device)
-print("lora weight adding...")
+print("Lora weight adding...")
 lora = Lora(model)
 lora.freeze_non_lora_params()
 lora.print_model_parameters()
 lora.enable_disable_lora(enabled=True)
 total_params, trainable_params = lora.count_parameters()
-print(f"Toplam parametre sayısı: {total_params}")
-print(f"Eğitilebilir parametre sayısı: {trainable_params}")
+print(f"Total parameter count: {total_params}")
+print(f"Trainable parameter count: {trainable_params}")
 model = lora.model
 
 if train_type == "pretrain":
     model_args = ModelArgs()
     model = Transformer(model_args)
-    print("model loading...")
+    print("Model loading...")
     model.load_state_dict(torch.load(model_path,  map_location=device))
     model.to(device)
-    print("lora weight adding...")
+    print("Lora weight adding...")
     lora = Lora(model)
     lora.freeze_non_lora_params()
     lora.print_model_parameters()
     lora.enable_disable_lora(enabled=True)
     total_params, trainable_params = lora.count_parameters()
-    print(f"Toplam parametre sayısı: {total_params}")
-    print(f"Eğitilebilir parametre sayısı: {trainable_params}")
+    print(f"Total parameter count: {total_params}")
+    print(f"Trainable parameter count: {trainable_params}")
     model = lora.model
 else:
     model_args = ModelArgs()
     model = Transformer(model_args)
-    #model.load_state_dict(torch.load(model_path,  map_location=device))
     model.to(device)
     lora = Lora(model)
     lora.freeze_non_lora_params()
     lora.print_model_parameters()
     lora.enable_disable_lora(enabled=True)
     total_params, trainable_params = lora.count_parameters()
-    print(f"Toplam parametre sayısı: {total_params}")
-    print(f"Eğitilebilir parametre sayısı: {trainable_params}")
+    print(f"Total parameter count: {total_params}")
+    print(f"Trainable parameter count: {trainable_params}")
     model = lora.model
     model.load_state_dict(torch.load(model_path,  map_location=device))
-
-
 
 optimizer = torch.optim.AdamW(model.parameters(), lr=learning_rate)
 print(sum(p.numel() for p in model.parameters())/1e6, 'M parameters')
@@ -124,7 +131,6 @@ def estimate_loss():
     model.train()
     return out
 
-
 for iter in range(max_iters):
 
     if iter % eval_interval == 0 or iter == max_iters - 1:
@@ -139,9 +145,11 @@ for iter in range(max_iters):
     scaler.step(optimizer)
     scaler.update()
 
-
 text = "Bilgisayar Mühendisliği"
 context = torch.tensor([tokenizer.encode(text)], dtype=torch.long, device=device)
 print(tokenizer.decode(model.generate(context, max_new_tokens=400)[0].tolist()))
 
 torch.save(model.state_dict(), model_path)
+
+if __name__ == "__main__":
+    args = parse_args()
