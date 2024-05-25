@@ -27,6 +27,7 @@ eval_interval = 50
 learning_rate = 4e-4
 eval_iters = 50
 dropout = 0.2
+train_type = "pretrain"
 
 model_path = os.path.join(os.getcwd(), "model", "snapshot.pt")
 model_dir = os.path.join(os.getcwd(), "model")
@@ -73,6 +74,38 @@ total_params, trainable_params = lora.count_parameters()
 print(f"Toplam parametre sayısı: {total_params}")
 print(f"Eğitilebilir parametre sayısı: {trainable_params}")
 model = lora.model
+
+if train_type == "pretrain":
+    model_args = ModelArgs()
+    model = Transformer(model_args)
+    print("model loading...")
+    model.load_state_dict(torch.load(model_path,  map_location=device))
+    model.to(device)
+    print("lora weight adding...")
+    lora = Lora(model)
+    lora.freeze_non_lora_params()
+    lora.print_model_parameters()
+    lora.enable_disable_lora(enabled=True)
+    total_params, trainable_params = lora.count_parameters()
+    print(f"Toplam parametre sayısı: {total_params}")
+    print(f"Eğitilebilir parametre sayısı: {trainable_params}")
+    model = lora.model
+else:
+    model_args = ModelArgs()
+    model = Transformer(model_args)
+    #model.load_state_dict(torch.load(model_path,  map_location=device))
+    model.to(device)
+    lora = Lora(model)
+    lora.freeze_non_lora_params()
+    lora.print_model_parameters()
+    lora.enable_disable_lora(enabled=True)
+    total_params, trainable_params = lora.count_parameters()
+    print(f"Toplam parametre sayısı: {total_params}")
+    print(f"Eğitilebilir parametre sayısı: {trainable_params}")
+    model = lora.model
+    model.load_state_dict(torch.load(model_path,  map_location=device))
+
+
 
 optimizer = torch.optim.AdamW(model.parameters(), lr=learning_rate)
 print(sum(p.numel() for p in model.parameters())/1e6, 'M parameters')

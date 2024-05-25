@@ -21,7 +21,7 @@ scaler = GradScaler()
 
 batch_size = 8
 block_size = 1024
-max_iters = 500
+max_iters = 100
 eval_interval = 50
 learning_rate = 1e-4
 eval_iters = 50
