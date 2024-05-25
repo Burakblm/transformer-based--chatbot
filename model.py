@@ -12,8 +12,8 @@ from torch.nn import functional as F
 class ModelArgs:
     block_size: int = 1024
     vocab_size: int = 32002
-    n_layer: int = 8
-    n_head: int = 8
+    n_layer: int = 12
+    n_head: int = 12
     n_embd: int = 768
     dropout: float = 0.0
     bias: bool = False
@@ -50,7 +50,10 @@ class Attention(nn.Module):
         super().__init__()
 
         assert args.n_embd % args.n_head == 0
-        self.to_qkv = nn.Linear(args.n_embd, 3 * args.n_embd, bias=args.bias)
+        self.q = nn.Linear(args.n_embd, args.n_embd, bias=args.bias)
+        self.k = nn.Linear(args.n_embd, args.n_embd, bias=args.bias)
+        self.v = nn.Linear(args.n_embd, args.n_embd, bias=args.bias)
+
         self.to_out = nn.Linear(args.n_embd, args.n_embd, bias=args.bias)
 
         self.attn_dropout = nn.Dropout(args.dropout)
@@ -68,7 +71,10 @@ class Attention(nn.Module):
     def forward(self, x: torch.Tensor):
         B, T, C = x.size()
 
-        q, k, v = self.to_qkv(x).split(self.n_embd, dim=2)
+        q = self.q(x)
+        k = self.k(x)
+        v = self.v(x)
+        
         q = q.view(B, T, self.n_head, C // self.n_head).transpose(1, 2)
         k = k.view(B, T, self.n_head, C // self.n_head).transpose(1, 2)
         v = v.view(B, T, self.n_head, C // self.n_head).transpose(1, 2)

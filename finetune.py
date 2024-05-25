@@ -14,23 +14,24 @@ from typing import Optional
 from model import Transformer
 from prepare_data import preprocess_dialogues, prepare_text_data
 from utils import get_tokenizer
+from lora import Lora
 
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
 scaler = GradScaler()
 
-batch_size = 8
+batch_size = 2
 block_size = 1024
 max_iters = 500
 eval_interval = 50
-learning_rate = 1e-4
+learning_rate = 4e-4
 eval_iters = 50
 dropout = 0.2
+
 model_path = os.path.join(os.getcwd(), "model", "snapshot.pt")
 model_dir = os.path.join(os.getcwd(), "model")
 if not os.path.exists(model_dir):
     os.makedirs(model_dir)
-
 
 @dataclass
 class ModelArgs:
@@ -43,14 +44,13 @@ class ModelArgs:
     bias: bool = False
     norm_eps: float = 1e-4
 
+
 torch.manual_seed(42)
 
 tokenizer = get_tokenizer()
 
-
-text_data_path = os.path.join(os.getcwd(), "data", "output.txt")
-train_data, val_data = prepare_text_data(text_data_path)
-
+json_data_path = os.path.join(os.getcwd(), "data", "intents.json")
+train_data, val_data = preprocess_dialogues(json_data_path)
 
 def get_batch(split):
     data = train_data if split == 'train' else val_data
@@ -59,16 +59,20 @@ def get_batch(split):
     y = torch.stack([data[i+1:i+block_size+1] for i in ix])
     return x, y
 
-
-if os.path.exists(model_path):
-    model_args = ModelArgs()
-    model = Transformer(model_args)
-    model.load_state_dict(torch.load(model_path,  map_location=device))
-    model.to(device)
-else:
-    model_args = ModelArgs()
-    model = Transformer(model_args)
-    model = model.to(device)
+model_args = ModelArgs()
+model = Transformer(model_args)
+print("model loading...")
+model.load_state_dict(torch.load(model_path,  map_location=device))
+model.to(device)
+print("lora weight adding...")
+lora = Lora(model)
+lora.freeze_non_lora_params()
+lora.print_model_parameters()
+lora.enable_disable_lora(enabled=True)
+total_params, trainable_params = lora.count_parameters()
+print(f"Toplam parametre sayısı: {total_params}")
+print(f"Eğitilebilir parametre sayısı: {trainable_params}")
+model = lora.model
 
 optimizer = torch.optim.AdamW(model.parameters(), lr=learning_rate)
 print(sum(p.numel() for p in model.parameters())/1e6, 'M parameters')
@@ -101,7 +105,6 @@ for iter in range(max_iters):
     scaler.scale(loss).backward()
     scaler.step(optimizer)
     scaler.update()
-
 
 
 text = "Bilgisayar Mühendisliği"

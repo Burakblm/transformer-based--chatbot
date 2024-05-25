@@ -10,7 +10,7 @@ model_path = os.path.join(os.getcwd(), "model", "snapshot.pt")
 
 model_args = ModelArgs()
 model = Transformer(model_args)
-model.load_state_dict(torch.load(model_path))
+model.load_state_dict(torch.load(model_path, map_location=device))
 model.to(device)
 
 tokenizer = get_tokenizer()
@@ -35,10 +35,10 @@ def generate_text(model, text: str, stop_token=[32000], max_token: int = 100, te
 
 text = ""
 
-for i in range(5):
+while True:
     inpt = input("Human: ")
-    inpt = "<user>" + inpt + "<bot>"
+    text = text + "<user>" + inpt + "<bot>"
     response = generate_text(model, inpt)
-    text = response
-    print("Bot: ",response)
+    text =  text + response
+    print(text)
 
