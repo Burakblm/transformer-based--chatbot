@@ -13,8 +13,8 @@ device = "cuda" if torch.cuda.is_available() else "cpu"
 
 @dataclass
 class LoraConfig:
-    rank: int = 8
-    alpha: int = 32
+    rank: int = 16
+    alpha: int = 16
 
 class LoRAParametrization(nn.Module):
     def __init__(self, features_in, features_out, rank=1, alpha=1, device=device):
@@ -83,24 +83,3 @@ class Lora:
             if p.requires_grad:
                 trainable_params += p.numel()
         return total_params, trainable_params
-
-
-"""
-
-# Model tanımı
-model = Transformer(ModelArgs)
-model = model.to(device)
-
-# Lora sınıfının kullanımı
-lora = Lora(model)
-
-lora.freeze_non_lora_params()
-lora.print_model_parameters()
-lora.enable_disable_lora(enabled=True)
-
-total_params, trainable_params = lora.count_parameters()
-print(f"Toplam parametre sayısı: {total_params}")
-print(f"Eğitilebilir parametre sayısı: {trainable_params}")
-
-
-"""
